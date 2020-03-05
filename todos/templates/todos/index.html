@@ -1,0 +1,105 @@
+{%extends "todos/base.html"%}
+
+{%block title%}HOME{%endblock%}
+{%block css%}  
+<style>
+body{
+	    background:#faeeee;
+		font-family: 'Source Serif Pro',
+	}
+input{
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+	}
+input::placeholder {
+	  color: #d3d3d3;
+	}
+.submit{
+		background-color: #6BA3E8;
+	}
+#content{
+    width:600px;
+		margin: 20px auto;
+		padding:20px;
+		background-color: #fff;
+		border-radius: 3px;
+		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75)
+}
+.item-row{
+		background-color: #906abd;
+		margin: 10px;
+		padding: 20px;
+		border-radius: 3px;
+		color: #fff;
+		font-size: 16px;
+		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+	}
+#todo-completed {
+    
+	text-decoration: line-through;
+	background: rgba(149, 165, 166, .3);
+}
+
+</style>
+{%endblock%}
+
+{%block body%}
+    
+<div class="container-fluid" id="wrapper">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4" id="content">
+            <h6>WHAT DO YOU WANT TO DO TODAY?</h6>
+                    <form method="POST" action="{%url 'todos:add'%}">{%csrf_token%}
+                        <div class="form-group">
+                            <div class="input-group">
+                                {{form.title}}
+                                <input class="btn btn-info" type="submit" name="Create Task">
+                            </div>
+                        </div>
+                        
+                    </form>
+                    <div class="row t10">
+						<div class="col-lg-12">
+							<div class="btn-toolbar">
+								<div class="btn-group">
+									<a href="{%url 'todos:completeone' %}"><button type="button" class="btn btn-danger">
+										<i class="fa fa-trash-o" aria-hidden="true"></i> DELETE COMPLETED
+									</button> </a>
+								</div>
+								<div class="btn-group ml-2">
+                                    <a href="{%url 'todos:completedelete' %}"><button type="button" class="btn btn-danger">
+										<i class="fa fa-trash-o" aria-hidden="true"></i> DELETE ALL
+									</button></a>
+								</div>
+							</div>
+						</div>
+					</div>
+            
+                    
+                        {%if user_task%}
+                        {%for object in user_task%}
+                        <div class="item-row">
+                            <a class="btn btn-sm btn-info" href="{{object.get_absolute_url}}">Edit</a>
+                            <a class="btn btn-sm btn-danger" href="{{object.delete_data}}">Delete</a>
+                
+                            {% if object.complete == True %}
+                            <span id="todo-completed">{{object.title}}</span>
+                            {% else %}
+                            <span><a href="{%url 'todos:complete' object.pk%}">{{object.title}}</a></span>
+                            {% endif %}
+                        </div>
+                        {%endfor%}
+                        {%else%}
+                        <p>Please add some data.</p>
+                        {%endif%}
+						
+						
+						
+					
+        </div>
+    </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,55 @@
+{%extends "todos/base.html"%}
+{% load crispy_forms_tags %}
+
+{%block title%}LOGIN{%endblock%}
+{%block css%}
+<style>
+    body{
+        background:#faeeee;
+        font-family: 'Source Serif Pro';
+}
+.content{
+    
+    border:2px solid black;
+    width:600px;
+	margin: 20px auto;
+	padding:20px;
+	background-color: #fff;
+	border-radius: 3px;
+	box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75)
+}
+.inner{
+    margin-left:20px;
+    margin-top:20px;
+}
+input{
+		width: 100%;
+		padding: 12px 20px;
+		margin: 8px 0;
+		box-sizing: border-box;
+	}
+
+</style>
+{%endblock%}
+{%block body%}
+   
+<div class="container ">
+    <div class="row justify-content-md-center">
+        <div class="col col-md-6 col-sm-6 col-xs-6  content">
+            
+<form method="POST">{%csrf_token%}
+   
+    {{form|crispy}}
+    <div class="row">
+        <div class="inner">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+   
+</form>
+
+</div>
+</div>
+</div>
+
+{%endblock%}
